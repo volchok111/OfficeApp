@@ -1,4 +1,10 @@
 package com.example.officeapp.ui.home
 
-interface HomeView {
+import com.arellomobile.mvp.MvpView
+
+interface HomeView: MvpView {
+    fun onRequestStart()
+    fun onRequestComplete()
+    fun onRequestError(message: Int)
+    fun onConnectionAbsence()
 }
