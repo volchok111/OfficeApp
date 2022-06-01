@@ -27,16 +27,29 @@ class MainFragment : HomeFragment(), MainView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentMainBinding.inflate(layoutInflater)
+        binding.recyclerView.adapter = adapter
 
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        context?.let { mainPresenter.startInitialization(it) }
     }
 
     override fun onListSetup(companies: List<CompanyModel>) {
-        TODO("Not yet implemented")
+        adapter.newList(companies as ArrayList<CompanyModel> /* = java.util.ArrayList<com.example.officeapp.model.CompanyModel> */)
     }
 
     override fun addCompany(company: CompanyModel) {
-        TODO("Not yet implemented")
+        adapter.addList(company)
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        mainPresenter.dispose()
+        super.onDestroyView()
     }
 
 }

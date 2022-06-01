@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface HttpApi {
 //GET - https://fakerapi.it/api/v1/companies
-    @GET("/companies")
+    @GET("companies")
     fun getCompanies(): Observable<Companies>
 
 

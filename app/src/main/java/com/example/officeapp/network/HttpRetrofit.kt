@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 object HttpRetrofit {
     private var INSTANCE: Retrofit? = null
-    private const val BASE_URL = "https://fakerapi.it/api/v1"
+    private const val BASE_URL = "https://fakerapi.it/api/v1/"
 
     private fun getRetrofit(): Retrofit{
         return INSTANCE ?:
