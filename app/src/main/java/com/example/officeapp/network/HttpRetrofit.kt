@@ -11,6 +11,11 @@ object HttpRetrofit {
     private var INSTANCE: Retrofit? = null
     private const val BASE_URL = "https://fakerapi.it/api/v1/"
 
+    /**
+     * It creates a Retrofit instance.
+     *
+     * @return A Retrofit object
+     */
     private fun getRetrofit(): Retrofit{
         return INSTANCE ?:
         Retrofit.Builder()
@@ -20,6 +25,13 @@ object HttpRetrofit {
             .client(getHttpClient())
             .build()
     }
+
+
+    /**
+     * It creates an OkHttpClient object with logging enabled.
+     *
+     * @return A OkHttpClient object
+     */
     private fun getHttpClient(): OkHttpClient{
         val okHttpClientBuilder = OkHttpClient.Builder()
         val logging = HttpLoggingInterceptor()
@@ -31,6 +43,13 @@ object HttpRetrofit {
             .cache(null)
             .build()
     }
+
+
+    /**
+     * It returns an instance of HttpApi.
+     *
+     * @return A Retrofit object.
+     */
     fun getHttpApi(): HttpApi{
         return getRetrofit().create(HttpApi::class.java)
     }
