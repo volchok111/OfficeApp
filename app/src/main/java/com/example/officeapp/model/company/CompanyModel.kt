@@ -19,7 +19,7 @@ import java.io.Serializable
  * @property {String} website - The website of the company.
  */
 data class CompanyModel(
-    val addresses: List<Addresse>,
+    val addresses: List<Address>,
     val contact: Contact,
     val country: String,
     val email: String,

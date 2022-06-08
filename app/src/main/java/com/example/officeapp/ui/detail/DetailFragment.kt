@@ -1,6 +1,7 @@
 package com.example.officeapp.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,6 +60,8 @@ class DetailFragment :HomeFragment(), DetailView {
 
             /* Calling the `onMakeCall` method from the `HomeFragment` class. */
             callFab.setOnClickListener {
+                Log.d("AAA","Click call")
+
                 onMakeCall(company.phone)
             }
 

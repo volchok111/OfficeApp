@@ -10,7 +10,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ApiServiceImpl: ApiService {
+class ApiServiceImpl : ApiService {
 
     private val httpRetrofit: HttpRetrofit = HttpRetrofit
 
@@ -32,8 +32,10 @@ class ApiServiceImpl: ApiService {
         val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val nw = manager.activeNetwork ?: return false
         val actNw = manager.getNetworkCapabilities(nw)
-        if (actNw != null){
-            return actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+        if (actNw != null) {
+            return actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(
+                NetworkCapabilities.TRANSPORT_CELLULAR
+            )
         }
         return true
     }

@@ -10,13 +10,13 @@ interface HttpApi {
     /**
      * This function will return an Observable of type Companies
      */
-    @GET("companies")
+    @GET("companies?_quantity=20&_seed=123456")
     fun getCompanies(): Observable<Companies>
 
     /**
      * This function will return an Observable of type Texts
      */
-    @GET("texts")
+    @GET("texts?_quantity=1&_characters=500")
     fun getText(): Observable<Texts>
 
 

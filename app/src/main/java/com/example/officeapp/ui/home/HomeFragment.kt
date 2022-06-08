@@ -1,16 +1,32 @@
 package com.example.officeapp.ui.home
 
+
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.provider.Settings
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
+import com.example.officeapp.api.ApiServiceImpl
 
 
 open class HomeFragment : MvpAppCompatFragment(), HomeView {
+
+
+
+    /**
+     * A function that is called when the request is started.
+     */
     override fun onRequestStart() {
 
     }
 
+    /**
+     * An override function that is called when the request is complete.
+     */
     override fun onRequestComplete() {
 
     }
@@ -21,16 +37,40 @@ open class HomeFragment : MvpAppCompatFragment(), HomeView {
      * @param message The message to be displayed in the Toast.
      */
     override fun onRequestError(message: Int) {
-        Toast.makeText(context, getString(message), Toast.LENGTH_LONG).show()
+
     }
 
     /**
      * It shows a toast message when there is no internet connection.
      */
     override fun onConnectionAbsence() {
-        context.let {
-            Toast.makeText(it, "Error connection absence", Toast.LENGTH_LONG).show()
-        }
+
+        showSettingsMessage(
+            requireContext(), { dialog, which ->
+                dialog.dismiss()
+                startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS))
+            },
+            getString(com.example.officeapp.R.string.no_internet_connection),
+            getString(com.example.officeapp.R.string.check_network_settings)
+        )
+    }
+
+     private fun showSettingsMessage(
+        context: Context,
+        positiveListener: DialogInterface.OnClickListener?,
+        vararg permissions: String?
+    ) {
+        val alertDialog: AlertDialog = AlertDialog.Builder(activity)
+            .setCancelable(true)
+            .setTitle(permissions[0])
+            .setMessage(permissions[1])
+            .setPositiveButton(com.example.officeapp.R.string.open, positiveListener)
+            .setNegativeButton(
+                com.example.officeapp.R.string.action_cancel
+            ) { dialog, which -> activity?.finish() }
+            .create()
+        alertDialog.setCanceledOnTouchOutside(false)
+        if (!activity?.isDestroyed!!) alertDialog.show()
     }
 
     /**
@@ -76,10 +116,9 @@ open class HomeFragment : MvpAppCompatFragment(), HomeView {
      * @param lon Longitude
      */
     open fun onShowMap(lat: String, lon: String) {
-        val navigationIntentUri =
-            Uri.parse("google.navigation:q=$lat,$lon") //creating intent with latlng
-
-        val mapIntent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
+        val gmmIntentUri =
+            Uri.parse("geo:0,0?q=${lon},${lat}")
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         mapIntent.setPackage("com.google.android.apps.maps")
         startActivity(mapIntent)
     }
